@@ -67,6 +67,7 @@
 - [Гипотезы](docs/hypotheses/hypotheses.md)
 - [Дорожная карта](docs/development/roadmap.md)
 - [Мультипликативность](docs/development/multiplicative.md)
+- [Технологический стек](docs/development/tech-stack.md)
 
 ## Лицензия
 MIT

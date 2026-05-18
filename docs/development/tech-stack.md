@@ -42,7 +42,7 @@
 
 **Результат:** Готовый протестированный макет, служивший точным техническим заданием для разработки, что исключило необходимость дополнительного согласования между дизайнерами и разработчиками.
 
-**Макет проекта:** [Посмотреть прототип в Figma](https://www.figma.com/design/ZkIpICEalAYqarRPJehoR8/Untitled?node-id=195-54&t=LeQiXPn7mkizZTL1-1)
+**Макет проекта:** [Посмотреть прототип в Figma](https://www.figma.com/design/ZkIpICEalAYqarRPJehoR8/%D0%9D%D0%B5%D0%BA%D1%81%D1%83%D1%81?node-id=0-1&t=LeQiXPn7mkizZTL1-1)
 ---
 
 ## 4. База данных и Backend-инфраструктура (Supabase)

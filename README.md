@@ -56,17 +56,32 @@
     * **Презентация и упаковка:** Разработка визуальной концепции и структуры финальной презентации, подготовка проекта к защите.
 
 ## Документация
+### Требования и аналитика
 - [Цель и миссия проекта](docs/requirements/project-goal.md)
 - [Целевая аудитория](docs/requirements/target-audience.md)
 - [Проблемы](docs/requirements/problems.md)
 - [Нормативные документы](docs/requirements/legal.md)
+
+### Архитектура и технологии
+- [Технологический стек](docs/architecture/tech-stack.md)
+- [Архитектура пользовательских сценариев](docs/architecture/user-flow.md)
+
+### Техническое задание
+- [Техническое задание (ТЗ)](docs/technical/tor.md)
+
+### MVP и планирование
 - [MVP](docs/mvp/mvp-scope.md)
-- [Метрики успеха](docs/metrics/metrics.md)
 - [MoSCoW](docs/moscow/moscow.md)
-- [Гипотезы](docs/hypotheses/hypotheses.md)
 - [Дорожная карта](docs/development/roadmap.md)
+
+### Метрики и гипотезы
+- [Метрики успеха](docs/metrics/metrics.md)
+- [Продуктовые гипотезы](docs/hypotheses/hypotheses.md)
+
+### Развитие и экономика
 - [Мультипликативность](docs/development/multiplicative.md)
-- [Технологический стек](docs/development/tech-stack.md)
+- [Развитие проекта](docs/development/evolution.md)
+- [Паспорт проекта (смета)](docs/economic/passport.md)
 
 ## Лицензия
 MIT

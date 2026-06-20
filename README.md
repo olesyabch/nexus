@@ -75,7 +75,7 @@
 
 ### Метрики и гипотезы
 - [Метрики успеха](docs/metrics/metrics.md)
-- [Гипотезы] (docs/hypotheses/hypotheses.md)
+- [Гипотезы](docs/hypotheses/hypotheses.md)
 
 ### Развитие и экономика
 - [Мультипликативность](docs/development/multiplicative.md)

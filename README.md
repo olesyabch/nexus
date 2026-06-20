@@ -57,9 +57,7 @@
 
 ## Документация
 ### Требования и аналитика
-- [Цель и миссия проекта](docs/requirements/project-goal.md)
-- [Целевая аудитория](docs/requirements/target-audience.md)
-- [Проблемы](docs/requirements/problems.md)
+- [Паспорт проекта](docs/requirements/project-goal.md)
 - [Нормативные документы](docs/requirements/legal.md)
 
 ### Архитектура и технологии
@@ -69,19 +67,15 @@
 ### Техническое задание
 - [Техническое задание (ТЗ)](docs/technical/tor.md)
 
-### MVP и планирование
+### MVP
 - [MVP](docs/mvp/mvp-scope.md)
-- [MoSCoW](docs/moscow/moscow.md)
-- [Дорожная карта](docs/development/roadmap.md)
 
-### Метрики и гипотезы
+### Метрики
 - [Метрики успеха](docs/metrics/metrics.md)
-- [Продуктовые гипотезы](docs/hypotheses/hypotheses.md)
 
 ### Развитие и экономика
 - [Мультипликативность](docs/development/multiplicative.md)
 - [Развитие проекта](docs/development/evolution.md)
-- [Паспорт проекта (смета)](docs/economic/passport.md)
 
 ## Лицензия
 MIT

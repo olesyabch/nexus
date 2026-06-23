@@ -58,6 +58,7 @@
 
 ## Сайт
 [НЕКСУС](https://olesyabch.github.io/Nexus/)
+[Открыть в GitHub.dev](https://github.dev/olesyabch/Nexus)
  
 ## Код
 - [Исходный код](src/)

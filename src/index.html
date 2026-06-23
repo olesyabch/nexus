@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>НЕКСУС</title>
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Стили -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- ФОНОВЫЕ ЭЛЕМЕНТЫ -->
+    <div class="background">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    <div class="glow" style="top:20%;left:10%;"></div>
+    <div class="glow" style="bottom:20%;right:10%;animation-delay:-2s;"></div>
+    <div class="logo-small">НЕКСУС</div>
+
+    <!-- ЭКРАН ПРИВЕТСТВИЯ -->
+    <div class="container">
+        <div class="screen" id="welcomeScreen">
+            <div class="logo-wrapper"><h1 class="logo">НЕКСУС</h1></div>
+            <button class="btn" id="btnOpenLogin">ВХОД</button>
+            <button class="btn" id="btnOpenRegister">РЕГИСТРАЦИЯ</button>
+        </div>
+    </div>
+
+    <!-- МОДАЛКИ -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="login-modal">
+            <h2 class="modal-title">ВХОД</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group"><input type="email" class="input" placeholder="Email" id="loginEmail" required autocomplete="off"></div>
+                <div class="input-group"><input type="password" class="input" placeholder="Пароль" id="loginPassword" required></div>
+                <button type="submit" class="submit-btn" id="loginBtn">Продолжить</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-card">
+            <h2 class="modal-title">РЕГИСТРАЦИЯ</h2>
+            <form id="registerForm" onsubmit="handleRegisterStep1(event)">
+                <div class="input-group"><input type="text" class="input" placeholder="Фамилия" id="regLastName" required></div>
+                <div class="input-group"><input type="text" class="input" placeholder="Имя" id="regFirstName" required></div>
+                <div class="input-group"><input type="text" class="input" placeholder="Введите никнейм" id="regNickname" required></div>
+                <div class="input-group"><input type="email" class="input" placeholder="Email" id="regEmail" required></div>
+                <div class="input-group"><input type="password" class="input" placeholder="Пароль" id="regPassword" required></div>
+                <div class="input-group"><input type="password" class="input" placeholder="Повторите пароль" id="regPasswordConfirm" required></div>
+                <button type="submit" class="submit-btn" id="regBtn1">Продолжить</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="aboutModal">
+        <div class="modal-card">
+            <span class="modal-back-arrow" onclick="goBackToRegister()">←</span>
+            <h2 class="modal-title" style="font-size:24px;">Здесь вы можете написать о себе</h2>
+            <form id="aboutForm" onsubmit="handleRegisterStep2(event)">
+                <textarea class="textarea" placeholder="Расскажите о себе..." id="regAbout"></textarea>
+                <button type="submit" class="submit-btn" id="regBtn2">Продолжить</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="uniModal">
+        <div class="uni-modal">
+            <span class="modal-back-arrow" onclick="closeModal('uniModal'); setTimeout(() => openModal('aboutModal'), 300);">←</span>
+            <h2 class="uni-title">ВЫ СВЯЗАНЫ С УНИВЕРСИТЕТОМ?</h2>
+            <div class="uni-icon">🎓</div>
+            <div class="uni-buttons">
+                <button class="uni-btn" id="uniYes" onclick="selectUni(true)">ДА</button>
+                <button class="uni-btn" id="uniNo" onclick="selectUni(false)">НЕТ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="roleModal">
+        <div class="role-modal">
+            <span class="modal-back-arrow" onclick="closeModal('roleModal'); setTimeout(() => openModal('uniModal'), 300);">←</span>
+            <h2 class="role-title">Кто вы?</h2>
+            <div class="role-buttons">
+                <button class="role-btn" id="roleStudent" onclick="selectRole('student')">Студент/Преподаватель</button>
+                <button class="role-btn" id="roleAdmin" onclick="selectRole('admin')">Администрация</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="studentUnivModal">
+        <div class="student-reg-modal">
+            <span class="modal-back-arrow" onclick="closeModal('studentUnivModal'); setTimeout(() => openModal('roleModal'), 300);">←</span>
+            <div class="student-header">Выбери свой университет 🎓</div>
+            <div class="faculty-list">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="studentCourseModal">
+    <div class="student-reg-modal">
+        <span class="modal-back-arrow" onclick="closeModal('studentCourseModal'); setTimeout(() => openModal('studentFacultyModal'), 300);">←</span>
+        <div class="student-header">Выбери свой курс 🎓</div>
+        
+        <div class="course-type-section">
+            <div class="course-type-title">Бакалавриат</div>
+            <div class="course-buttons">
+                <button class="course-btn" onclick="selectCourse(this, 'Бакалавриат', 1)">1 курс</button>
+                <button class="course-btn" onclick="selectCourse(this, 'Бакалавриат', 2)">2 курс</button>
+                <button class="course-btn" onclick="selectCourse(this, 'Бакалавриат', 3)">3 курс</button>
+                <button class="course-btn" onclick="selectCourse(this, 'Бакалавриат', 4)">4 курс</button>
+            </div>
+        </div>
+        
+        <div class="course-type-section">
+            <div class="course-type-title">Аспирантура</div>
+            <div class="course-buttons">
+                <button class="course-btn" onclick="selectCourse(this, 'Аспирантура', 1)">1 год</button>
+                <button class="course-btn" onclick="selectCourse(this, 'Аспирантура', 2)">2 год</button>
+                <button class="course-btn" onclick="selectCourse(this, 'Аспирантура', 3)">3 год</button>
+                <button class="course-btn" onclick="selectCourse(this, 'Аспирантура', 4)">4 год</button>
+            </div>
+        </div>
+        
+        <div class="course-type-section">
+            <div class="course-type-title">Магистратура</div>
+            <div class="course-buttons">
+                <button class="course-btn" onclick="selectCourse(this, 'Магистратура', 1)">1 год</button>
+                <button class="course-btn" onclick="selectCourse(this, 'Магистратура', 2)">2 год</button>
+            </div>
+        </div>
+        
+        <button class="teacher-btn-full" onclick="selectTeacherRole()">ПРЕПОДАВАТЕЛЬ</button>
+    </div>
+</div>
+
+    <div class="modal-overlay" id="studentFacultyModal">
+        <div class="student-reg-modal">
+            <span class="modal-back-arrow" onclick="closeModal('studentFacultyModal'); setTimeout(() => openModal('studentUnivModal'), 300);">←</span>
+            <div class="student-header">Выбери свой факультет 🎓</div>
+            <div class="faculty-list">
+             
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="studentGroupModal">
+    <div class="student-reg-modal">
+        <span class="modal-back-arrow" onclick="closeModal('studentGroupModal'); setTimeout(() => openModal('studentCourseModal'), 300);">←</span>
+        <div class="student-header">Выбери свою группу 🎓</div>
+        <div class="group-list" id="groupListContainer">
+            
+        </div>
+    </div>
+</div>
+
+    <!-- КАТЕГОРИИ -->
+    <div id="categoryApp">
+        <div class="category-header"><span class="category-back" onclick="goBackFromCategories()">←</span><div class="category-logo">НЕКСУС</div></div>
+        <div class="category-content" id="categoryContent"></div>
+    </div>
+
+    <div id="subApp">
+        <div class="sub-header"><span class="sub-back" onclick="goBackToCategories()">←</span><div class="sub-logo">НЕКСУС</div></div>
+        <div class="sub-content" id="subContent"></div>
+    </div>
+
+    <!-- НАСТРОЙКИ -->
+    <div class="settings-menu" id="settingsMenu">
+        <span class="settings-menu-back" onclick="closeSettings()">←</span>
+        <button class="settings-menu-btn" onclick="openSettingsSelect('univ')">Выбрать университет</button>
+        <button class="settings-menu-btn" onclick="openSettingsSelect('faculty')">Выбрать факультет</button>
+        <button class="settings-menu-btn" onclick="openSettingsSelect('course')">Выбрать курс</button>
+        <button class="settings-menu-btn" onclick="openSettingsSelect('group')">Выбрать группу</button>
+    </div>
+
+    <div class="settings-select" id="settingsSelect">
+        <div style="display:flex;align-items:center;padding:15px 20px;border-bottom:1px solid #e8e8e8;">
+            <span onclick="closeSettingsSelect()" style="font-size:24px;cursor:pointer;margin-right:15px;">←</span>
+            <div style="color:var(--primary);font-weight:700;font-size:20px;">НЕКСУС</div>
+        </div>
+        <div id="settingsSelectContent" style="padding:20px;flex:1;overflow-y:auto;"></div>
+    </div>
+
+    <!-- ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
+    <div id="studentApp">
+        <div class="background">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+        </div>
+        <div class="app-header" id="appHeader">
+            <div class="app-logo">НЕКСУС</div>
+            <div class="app-settings" onclick="openSettings()">⚙️</div>
+        </div>
+        <div class="app-content" id="appContent"></div>
+        <div class="app-nav" id="appNav">
+            <button class="nav-item" data-tab="search" onclick="switchTab('search',this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <span>Поиск</span>
+            </button>
+            <button class="nav-item" data-tab="chat" onclick="switchTab('chat',this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                <span>Чаты</span>
+            </button>
+            <button class="nav-item active" data-tab="notif" onclick="switchTab('notif',this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                <span>Уведомления</span>
+            </button>
+            <button class="nav-item" data-tab="profile" onclick="switchTab('profile',this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Профиль</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- АДМИН-ПАНЕЛЬ -->
+    <div id="adminApp" style="display:none;">
+        <div style="padding:20px;display:flex;align-items:center;gap:15px;">
+            <button onclick="document.getElementById('adminApp').style.display='none';document.getElementById('welcomeScreen').style.display='flex';document.querySelector('.logo-small').style.display='block'" style="background:none;border:none;font-size:22px;cursor:pointer;">←</button>
+            <div style="color:var(--primary);font-weight:700;font-size:20px;">НЕКСУС</div>
+        </div>
+        <div style="padding:20px;">
+            <div style="text-align:center;margin-bottom:25px;"><div style="display:inline-flex;align-items:center;gap:8px;background:rgba(100,141,229,0.15);color:var(--primary);padding:12px 24px;border-radius:24px;font-weight:700;">Выберите университет 🎓</div></div>
+            <div style="display:flex;flex-direction:column;">
+                <!-- Загружается из БД -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Экран статистики группы -->
+    <div id="groupStatsApp" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:2000;display:none;flex-direction:column;font-family:var(--font);">
+        <div style="display:flex;align-items:center;padding:20px;border-bottom:1px solid #e8e8e8;">
+            <span onclick="goBackToGroupSelection()" style="font-size:24px;cursor:pointer;margin-right:15px;color:var(--text);">←</span>
+            <div style="color:var(--primary);font-weight:700;font-size:20px;">НЕКСУС</div>
+        </div>
+        <div id="groupStatsContainer" style="flex:1;overflow-y:auto;padding:20px;"></div>
+    </div>
+
+    <!-- Экран статистики студента -->
+    <div id="studentStatsApp" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:2100;display:none;flex-direction:column;font-family:var(--font);">
+        <div style="display:flex;align-items:center;padding:20px;border-bottom:1px solid #e8e8e8;">
+            <span onclick="goBackToGroupStats()" style="font-size:24px;cursor:pointer;margin-right:15px;color:var(--text);">←</span>
+            <div style="color:var(--primary);font-weight:700;font-size:20px;">НЕКСУС</div>
+        </div>
+        <div id="studentStatsContainer" style="flex:1;overflow-y:auto;padding:20px;"></div>
+    </div>
+
+    <!-- Модалка отправки запроса -->
+    <div class="modal-overlay" id="sendRequestModal" style="z-index: 10000 !important;">
+        <div class="modal-card send-request-modal" style="max-width:420px; z-index: 10001; position: relative;">
+            <span class="modal-back-arrow" onclick="closeModal('sendRequestModal')" style="top:15px;left:15px;">←</span>
+            <h2 class="modal-title" style="font-size:22px;margin-bottom:10px;">Отправить запрос</h2>
+            
+            <div style="text-align:center;margin-bottom:30px;">
+                <div style="font-size:18px;font-weight:700;color:var(--primary);margin-bottom:8px;">@<span id="requestRecipientNick"></span></div>
+                <div style="font-size:13px;color:#727272;">Стоимость: 5 коинсов (списываются после принятия)</div>
+            </div>
+            
+            <form id="sendRequestForm" onsubmit="submitRequest(event)">
+                <div class="input-group">
+                    <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;">Навык</label>
+                    <div class="custom-select-wrapper">
+                        <select class="custom-select" id="requestSkill" required>
+                            <option value="">Выберите навык</option>
+                        </select>
+                        <div class="custom-select-arrow"></div>
+                    </div>
+                </div>
+                
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                    <div class="input-group">
+                        <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;">Дата</label>
+                        <div class="custom-input-wrapper">
+                            <input type="date" class="custom-input-date" id="requestDate" required>
+                            <span class="input-icon">📅</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;">Время</label>
+                        <div class="custom-input-wrapper">
+                            <input type="time" class="custom-input-time" id="requestTime" required>
+                            <span class="input-icon">🕐</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;">Сообщение</label>
+                    <textarea class="textarea custom-textarea" placeholder="Расскажите о вашем запросе..." id="requestMessage" style="min-height:100px;" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-request-button" id="sendRequestBtn">
+                    Отправить запрос
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модалка отзыва -->
+    <div class="modal-overlay" id="reviewModal" style="z-index: 10000 !important;">
+        <div class="modal-card send-request-modal" style="max-width:420px; z-index: 10001; position: relative;">
+            <span class="modal-back-arrow" onclick="closeModal('reviewModal')" style="top:15px;left:15px;">←</span>
+            <h2 class="modal-title" style="font-size:22px;margin-bottom:10px;">Оставить отзыв</h2>
+            
+            <div style="text-align:center;margin-bottom:25px;">
+                <div style="font-size:18px;font-weight:700;color:var(--primary);margin-bottom:8px;">@<span id="reviewRecipientNick"></span></div>
+            </div>
+            
+            <form id="reviewForm" onsubmit="submitReviewForm(event)">
+                <div class="input-group">
+                    <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;text-align:center;">Оценка</label>
+                    <div id="starRating" style="display:flex;justify-content:center;gap:10px;margin-bottom:15px;">
+                        <span class="star" data-rating="1" onclick="selectRating(1)" style="font-size:36px;cursor:pointer;color:#ddd;transition:color 0.2s;">★</span>
+                        <span class="star" data-rating="2" onclick="selectRating(2)" style="font-size:36px;cursor:pointer;color:#ddd;transition:color 0.2s;">★</span>
+                        <span class="star" data-rating="3" onclick="selectRating(3)" style="font-size:36px;cursor:pointer;color:#ddd;transition:color 0.2s;">★</span>
+                        <span class="star" data-rating="4" onclick="selectRating(4)" style="font-size:36px;cursor:pointer;color:#ddd;transition:color 0.2s;">★</span>
+                        <span class="star" data-rating="5" onclick="selectRating(5)" style="font-size:36px;cursor:pointer;color:#ddd;transition:color 0.2s;">★</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;">Комментарий</label>
+                    <textarea class="textarea custom-textarea" placeholder="Напишите ваш отзыв..." id="reviewComment" style="min-height:100px;" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-request-button" id="submitReviewBtn">
+                    Отправить отзыв
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Окно настроек -->
+    <div class="modal-overlay" id="settingsApp" style="z-index: 3000 !important;">
+        <div class="settings-modal">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid #e8e8e8;">
+                <h2 style="font-size:22px;font-weight:700;color:var(--primary);margin:0;">Настройки</h2>
+                <span onclick="closeSettingsApp()" style="font-size:28px;cursor:pointer;color:#999;">&times;</span>
+            </div>
+            
+            <div style="padding:40px 30px;display:flex;flex-direction:column;gap:20px;">
+                <button class="settings-big-btn" onclick="openEditProfile()">
+                    Редактировать профиль
+                </button>
+                
+                <button class="settings-big-btn" onclick="openSupportChat()">
+                    Написать в поддержку
+                </button>
+                
+                <button class="settings-big-btn" onclick="openWallet()">
+                    Кошелёк
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалка редактирования профиля -->
+    <div class="modal-overlay" id="editProfileModal" style="z-index: 10000 !important;">
+        <div class="edit-profile-modal" style="max-width:700px; width:90%; margin:0 auto;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid #e8e8e8;">
+                <h2 style="font-size:22px;font-weight:700;color:var(--primary);margin:0;">Редактирование профиля</h2>
+                <span onclick="closeModal('editProfileModal')" style="font-size:28px;cursor:pointer;color:#999;">&times;</span>
+            </div>
+            
+            <div style="padding:30px;max-height:70vh;overflow-y:auto;">
+                <!-- Аватарка -->
+                <div style="text-align:center;margin-bottom:30px;">
+                    <div style="width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#E8EEF8,#d0d8e8);display:flex;align-items:center;justify-content:center;font-size:56px;margin:0 auto 15px;cursor:pointer;" onclick="document.getElementById('avatarInput').click()">
+                        👤
+                    </div>
+                    <button onclick="document.getElementById('avatarInput').click()" style="background:var(--primary);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);">
+                        Изменить аватарку
+                    </button>
+                    <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="uploadAvatar(this)">
+                </div>
+                
+                <!-- Имя -->
+                <div style="margin-bottom:20px;">
+                    <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;">Имя</label>
+                    <input type="text" id="editFirstName" class="input" placeholder="Введите имя" style="width:100%;">
+                </div>
+                
+                <!-- Фамилия -->
+                <div style="margin-bottom:20px;">
+                    <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;">Фамилия</label>
+                    <input type="text" id="editLastName" class="input" placeholder="Введите фамилию" style="width:100%;">
+                </div>
+                
+                <!-- Никнейм -->
+                <div style="margin-bottom:20px;">
+                    <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;">Никнейм</label>
+                    <input type="text" id="editNickname" class="input" placeholder="@nickname" style="width:100%;">
+                </div>
+                
+                <!-- Информация о пользователе -->
+                <div style="margin-bottom:20px;">
+                    <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;">Информация о пользователе</label>
+                    <textarea id="editBio" class="textarea" placeholder="Расскажите о себе..." style="min-height:100px;width:100%;"></textarea>
+                </div>
+                
+                <!-- Навыки -->
+                <div style="margin-bottom:20px;">
+                    <label style="display:block;font-size:13px;color:#727272;margin-bottom:8px;font-weight:600;">Навыки</label>
+                    
+                    <div style="display:flex;gap:10px;margin-bottom:15px;">
+                        <button onclick="showEditSkills('can')" id="btnEditCan" class="edit-skill-tab active" style="flex:1;padding:12px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);">
+                            Могу обучить
+                        </button>
+                        <button onclick="showEditSkills('want')" id="btnEditWant" class="edit-skill-tab" style="flex:1;padding:12px;background:rgba(100,141,229,0.2);color:var(--primary);border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);">
+                            Хочу освоить
+                        </button>
+                    </div>
+                    
+                    <div id="editSkillsContainer" style="background:rgba(100,141,229,0.05);border-radius:12px;padding:15px;min-height:150px;">
+                        
+                    </div>
+                    
+                    <!-- Выбранные навыки -->
+                    <div id="editSelectedSkills" style="margin-top:15px;">
+                        <div style="font-size:13px;color:#727272;margin-bottom:8px;">Выбранные навыки:</div>
+                        <div id="editSelectedSkillsList" style="display:flex;flex-wrap:wrap;gap:8px;">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="padding:20px;border-top:1px solid #e8e8e8;display:flex;gap:10px;justify-content:flex-end;">
+                <button onclick="closeModal('editProfileModal')" style="padding:12px 24px;background:#f5f5f5;color:var(--text);border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font);">
+                    Отмена
+                </button>
+                <button onclick="saveProfileChanges()" style="padding:12px 30px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font);">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалка кошелька -->
+    <div class="modal-overlay" id="walletModal" style="z-index: 10000 !important;">
+        <div class="wallet-modal">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid #e8e8e8;">
+                <h2 style="font-size:22px;font-weight:700;color:var(--primary);margin:0;">Кошелёк</h2>
+                <span onclick="closeModal('walletModal')" style="font-size:28px;cursor:pointer;color:#999;">&times;</span>
+            </div>
+            
+            <div style="padding:30px;max-height:70vh;overflow-y:auto;">
+                <!-- Баланс -->
+                <div style="background:rgba(100,141,229,0.1);border-radius:16px;padding:25px;text-align:center;margin-bottom:25px;">
+                    <div style="font-size:28px;font-weight:700;color:var(--primary);margin-bottom:8px;">
+                        Баланс: <span id="walletBalance">0</span> коинсов
+                    </div>
+                    <div style="font-size:16px;color:#727272;">
+                        Заморожено: <span id="walletFrozen">0</span> коинсов
+                    </div>
+                </div>
+                
+                <!-- Кнопки -->
+                <div style="display:flex;gap:12px;margin-bottom:30px;justify-content:center;flex-wrap:wrap;">
+                    <button onclick="buySubscription()" style="padding:14px 28px;background:rgba(100,141,229,0.2);color:var(--primary);border:2px solid var(--primary);border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font);">
+                        Купить подписку
+                    </button>
+                    <button onclick="buyCoins()" style="padding:14px 28px;background:var(--primary);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font);">
+                        Купить коинсы
+                    </button>
+                </div>
+                
+                <!-- История транзакций -->
+                <div style="font-size:16px;font-weight:700;color:var(--primary);margin-bottom:15px;text-align:center;">
+                    История транзакций
+                </div>
+                <div id="transactionsList" style="display:flex;flex-direction:column;gap:10px;">
+                    <div style="padding:40px;text-align:center;color:#999;">Загрузка...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экран выбора типа обучения для статистики -->
+    <div id="courseTypeStatsApp" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:2050;display:none;flex-direction:column;font-family:var(--font);">
+        <div style="display:flex;align-items:center;padding:20px;border-bottom:1px solid #e8e8e8;">
+            <span onclick="goBackToInstituteSelection()" style="font-size:24px;cursor:pointer;margin-right:15px;color:var(--text);">←</span>
+            <div style="color:var(--primary);font-weight:700;font-size:20px;">НЕКСУС</div>
+        </div>
+        <div id="courseTypeStatsContainer" style="flex:1;overflow-y:auto;padding:20px;"></div>
+    </div>
+
+    <!-- СКРИПТЫ В САМОМ КОНЦЕ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>

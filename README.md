@@ -57,8 +57,7 @@
 
 
 ## Сайт
-[НЕКСУС](https://olesyabch.github.io/Nexus/)
-[Открыть исходный файл](https://github.com/olesyabch/Nexus/blob/main/src/index.html)
+[НЕКСУС](bright-creponne-5ebd2e.netlify.app)
  
 ## Код
 - [Исходный код](src/)

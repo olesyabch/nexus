@@ -79,7 +79,6 @@
 - [MVP](docs/mvp/mvp-scope.md)
 
 ### Метрики и гипотезы
-- [Метрики успеха](docs/metrics/metrics.md)
 - [Гипотезы](docs/hypotheses/hypotheses.md)
 
 ### Развитие и экономика

@@ -84,7 +84,7 @@
 
 ### Развитие и экономика
 - [Мультипликативность](docs/development/multiplicative.md)
-- [Развитие проекта](docs/development/evolution.md)
+- [Дорожная карта](docs/development/evolution.md)
 
 ## Лицензия
 MIT

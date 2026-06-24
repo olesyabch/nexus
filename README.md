@@ -57,7 +57,7 @@
 
 
 ## Сайт
-[НЕКСУС](https://bright-creponne-5ebd2e.netlify.app)
+[НЕКСУС]([https://bright-creponne-5ebd2e.netlify.app](https://bright-creponne-5ebd2e.netlify.app/))
  
 ## Код
 - [Исходный код](src/)
